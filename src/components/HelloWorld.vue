@@ -1,58 +1,73 @@
+<style>
+.myContent {
+  padding-top: 20px;
+}
+
+img {
+  padding: 5px;
+}
+</style>
+
+
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+    <div class="container">
+        <h1 class="title">{{ msg }}</h1>
+
+        <input name="search" class="input" v-model="searchTerm">
+        <br><br>
+        <button @click="performSearch" class="button is-primary is-large">Search</button>
+
+        <div class="myContent">
+            <img v-for="i in images" :key="i.id" :src="i.images.fixed_height_still.url">
+        </div>
+    </div>
 </template>
 
 <script>
-export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
-}
-</script>
+import axios from "axios";
+import cloudinary from "cloudinary-core";
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
+export default {
+  name: "HelloWorld",
+  data() {
+    return {
+      msg: "Welcome to Image Search Manipulator",
+      searchTerm: "dogs",
+      images: [],
+      manipulatedImages: ""
+    };
+  },
+  methods: {
+    performSearch: function() {
+      // console.log(this.searchTerm);
+      var link = "http://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=";
+      const apiLink = link + this.searchTerm;
+
+      const cl = new cloudinary.Cloudinary({
+        cloud_name: "nikola"
+      });
+
+      axios
+        .get(apiLink)
+          .then(response => {
+            // console.log(response);
+            this.images = response.data.data;
+
+            this.images.forEach(image => {
+              const cloudinaryImage = cl
+                .imageTag(image.images.fixed_height_still.url, {
+                  width: 150,
+                  height: 150
+                })
+                .toHtml();
+
+              this.manipulatedImages += cloudinaryImage;
+            });
+          })
+          .catch(error => {
+              console.log(error);
+          });
+    }
+  }
+};
+</script>

@@ -1,21 +1,128 @@
+######################
+# Project Specific
+######################
+/build/www/**
+
+######################
+# Eclipse
+######################
+*.pydevproject
+.project
+.metadata
+/bin/**
+/tmp/**
+/tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/**
+.loadpath
+/src/main/resources/rebel.xml
+
+# External tool builders
+.externalToolBuilders/**
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# CDT-specific
+.cproject
+
+# PDT-specific
+.buildpath
+
+######################
+# Intellij
+######################
+.idea/**
+*.iml
+*.iws
+*.ipr
+*.ids
+*.orig
+
+######################
+# Maven
+######################
+/log/**
+/target/**
+
+######################
+# Package Files
+######################
+*.jar
+*.war
+*.ear
+*.db
+
+######################
+# Windows
+######################
+# Windows image file caches
+Thumbs.db
+
+# Folder config file
+Desktop.ini
+
+######################
+# Mac OSX
+######################
 .DS_Store
-node_modules
-/dist
+.svn
 
-# local env files
-.env.local
-.env.*.local
+# Thumbnails
+._*
 
-# Log files
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
 
-# Editor directories and files
-.idea
-.vscode
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw*
+######################
+# Directories
+######################
+/build/**
+/bin/**
+/spring_loaded/**
+/deploy/**
+
+######################
+# Logs
+######################
+*.log
+
+######################
+# Others
+######################
+*.class
+*.*~
+*~
+.merge_file*
+
+######################
+# Gradle
+######################
+!gradle/wrapper/gradle-wrapper.jar
+.gradle/
+.gradle/**
+out
+
+######################
+# Maven Wrapper
+######################
+!.mvn/wrapper/maven-wrapper.jar
+.idea/
+build/
+ci/assets/
+ci/credentials-ecslab.yml
+ci/scripts/
+
+
+######################
+# Node packages
+######################
+dist/
+node_modules/
+src/components/HelloWorld0.vue
