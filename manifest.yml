@@ -1,0 +1,8 @@
+---
+applications:
+- name: image-search-manipulator
+  memory: 512M
+  instances: 1
+  command: node --inspect server.js
+  buildpacks:
+    - https://github.com/cloudfoundry/nodejs-buildpack
